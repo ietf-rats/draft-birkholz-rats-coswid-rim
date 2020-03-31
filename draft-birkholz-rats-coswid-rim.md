@@ -133,6 +133,22 @@ To enable very small CoSWID tags that basically are signed references to full Ba
 |---
 | rim-reference | 0-1 | A URI pointing to the CoSWID Base RIM that will list the payload reference measurements (hashes) in case of a minimal CoSWID tag.
 
+{: #rpm-version-scheme}
+### CoSWID Version Scheme for RPM
+
+To enable encoding version information into a CoSWID of RPM packages, the SWID version scheme value index TBD1 has been registered.
+RPM versions are defined as epoch:version-release-architecture, where the "epoch:" component is optional.
+Epoch is a numerical value, which should be considered zero if the epoch component is missing.
+Version and Release can be any string as long as they do not contain a hyphen (-).
+Architecture is an alphanumerical string.
+
+Sorting of RPM versions is a multi-step process:
+- The epoch, version and release components are compared in that order, as soon as a difference is found, that is the overall difference.
+- The epoch component is compared as integers. A higher number means a higher version.
+- The version and release components are compared alphabetically, until a digit is encountered in both strings, at which point as many digits are consumed from both to form an integer, which is then compared. If the integers are identical, the comparison continues alphabetically.
+- The architecture component is never sorted. If they are different between two versions, the versions are inequal, not higher or lower.
+
+
 ## Additional Measurement Attributes for CoSWID
 
 {{-coswid}} specifies a well-defined file hash structure for integrity measurements of individual files in a file-system. This documents extends this feature to all additional members of the resource-collection group: 'directory', 'resource', and 'process'. These new well-defined measurement options extend the scope of RIM to (sub-)trees of files, software running in memory (e.g. available from Trusted Execution Environments, such as SGX enclaves), and even external resources, such as remote services of collections of RIM bundles.
@@ -160,5 +176,13 @@ TBD
 # Security Considerations
 
 To be elaborated on
+
+# IANA Considerations
+
+This document has added the following entries to the SWID/CoSWID Version Scheme Values registry at <https://www.iana.org/assignments/swid>:
+
+    Index: TBD1
+    Version Scheme Name: rpm
+    Specification: See {{rpm-version-scheme}}
 
 --- back
