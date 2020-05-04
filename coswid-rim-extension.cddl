@@ -14,8 +14,20 @@ reference-measurement-entry = {
   ? firmware-manufacturer-name => text,
   ? firmware-model-name => text,
   ? firmware-version => uint,
+  ? boot-events => [* boot-event-entry]
   rim-link-hash => bytes,
 }
+
+boot-event-entry = (
+   event-number: uint,
+   event-type: uint,
+   digest-list: [1* hash-entry],
+   event-data: bytes
+)
+hash-entry = [ 
+  hash-alg-id: int,
+  hash-value: bytes,
+]
 
 $$payload-extension //= ( ? support-rim-type-kramdown => direct / indirect, )
 $$payload-extension //= ( ? support-rim-format => text, )
@@ -42,6 +54,7 @@ support-rim-type-kramdown = 74
 support-rim-format = 75
 support-rim-uri-global = 76
 rim-reference = 77
+boot-events = 78
 
 direct = 0
 indirect = 1
