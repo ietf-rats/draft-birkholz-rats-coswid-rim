@@ -14,25 +14,21 @@ reference-measurement-entry = {
   ? firmware-manufacturer-name => text,
   ? firmware-model-name => text,
   ? firmware-version => uint,
-  ? boot-events => [* boot-event-entry]
+  ? boot-events => [ * boot-event-entry ],
   rim-link-hash => bytes,
 }
 
-boot-event-entry = (
-   event-number: uint,
-   event-type: uint,
-   digest-list: [1* hash-entry],
-   event-data: bytes
-)
-hash-entry = [ 
-  hash-alg-id: int,
-  hash-value: bytes,
-]
+boot-event-entry = {
+   boot-event-number => uint,
+   boot-event-type => uint,
+   boot-digest-list => [ 1* hash-entry ],
+   boot-event-data => bytes
+}
 
-$$payload-extension //= ( ? support-rim-type-kramdown => direct / indirect, )
-$$payload-extension //= ( ? support-rim-format => text, )
-$$payload-extension //= ( ? support-rim-uri-global => any-uri, )
-$$payload-extension //= ( ? rim-reference => any-uri, )
+$$payload-extension //= ( ? support-rim-type-kramdown => direct / indirect )
+$$payload-extension //= ( ? support-rim-format => text )
+$$payload-extension //= ( ? support-rim-uri-global => any-uri )
+$$payload-extension //= ( ? rim-reference => any-uri )
 
 reference-measurement = 58
 payload-type = 59
@@ -55,6 +51,10 @@ support-rim-format = 75
 support-rim-uri-global = 76
 rim-reference = 77
 boot-events = 78
+boot-event-number = 79
+boot-event-type = 80
+boot-digest-list = 81
+boot-event-data = 82
 
 direct = 0
 indirect = 1
@@ -65,3 +65,62 @@ $$directory-extension //= ( ? hash => hash-entry )
 $$resource-extension //= ( ? hash => hash-entry )
 
 $$process-extension //= ( ? hash => hash-entry )
+
+$$link-extension //= ( ? thumbprint => hash-entry )
+
+$$resource-collection-extension //= (
+  ? object => object-entry / [ 2* object-entry ]
+)
+
+object-entry = { 
+  resource-collection,
+  tcb-info,
+  $$object-extension,
+}
+
+tcb-info = (
+  tcb-info.id => hash-entry, 
+  tcb-info.key-elements => {
+    tcb-info.vendor => text,
+    ? tcb-info.model => text,
+    ? tcb-info.layer => int,
+    ? tcb-info.index => int,
+    tcb-info.type => tagged-bytes / uuid-bytes,
+  },
+  ? tcb-info.version => text,
+  ? tcb-info.SVN => int,
+  ? tcb-info.flags => uint .bits tcb-info.operational-flags,
+  ? tcb-info.fwids,
+  ? tcb-info.vendorinfo => bytes .size 8,
+  ? tcb-info.vendormask => bytes,
+)
+
+uuid-bytes = bytes .size 8
+
+tcb-info.operational-flags = &(
+  not-configured: 0,
+  not-secure: 1,
+  recovery: 2,
+  debug: 3,
+)
+
+tcb-info.fwids = [
+  + [ hash-alg: [ * int ] / text,
+      digest: bytes,
+    ]
+]
+
+object = 83
+tcb-info.id = 84
+tcb-info.key-elements = 85
+tcb-info.vendor = 86
+tcb-info.model = 87
+tcb-info.layer = 88
+tcb-info.index = 89
+tcb-info.type = 90
+tcb-info.version = 91
+tcb-info.SVN = 92
+tcb-info.flags = 93
+tcb-info.fwids = 94
+tcb-info.vendorinfo = 95
+tcb-info.vendormask = 96
