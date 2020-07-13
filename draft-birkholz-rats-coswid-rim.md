@@ -58,6 +58,16 @@ author:
   region: Maryland
   code: '20877'
   country: USA
+- ins: S. Bhandari
+  name: Shwetha Bhandari
+  org: Cisco Systems, Inc.
+  abbrev: Cisco
+  email: shwethab@cisco.com
+  street: Cessna Business Park, Sarjapura Marathalli Outer Ring Road
+  city: Bangalore
+  region: KARNATAKA
+  code: '560087'
+  country: India
 
 normative:
   RFC2119:
@@ -134,6 +144,7 @@ The design of the additional RIM attributes in this section is motivated by the 
 | firmware-manufacturer-name | 0-1 | An identifier that is represented as the name of a platform manufacturer via a text (tstr) value that SHOULD be included in a CoSWID RIM that covers firmware.
 | firmware-model-name | 0-1 | An identifier that represents the target platform model via a text (tstr) value that SHOULD be included in a CoSWID RIM.
 | firmware-version | 0-1 | An identifier that is represented as the version number of a specific firmware version corresponding to a given set of platform identifiers and SHOULD be included in a CoSWID RIM.
+| boot-events | 0-1 | A reference to the platform measured boot event logs that can be compared to individual events from the platform measured boot events collected at platform runtime.
 
 ## RIM Extensions for Software Package Management
 

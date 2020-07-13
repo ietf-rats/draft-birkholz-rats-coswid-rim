@@ -14,7 +14,15 @@ reference-measurement-entry = {
   ? firmware-manufacturer-name => text,
   ? firmware-model-name => text,
   ? firmware-version => uint,
+  ? boot-events => [ * boot-event-entry ],
   rim-link-hash => bytes,
+}
+
+boot-event-entry = {
+   boot-event-number => uint,
+   boot-event-type => uint,
+   boot-digest-list => [ 1* hash-entry ],
+   boot-event-data => bytes
 }
 
 $$payload-extension //= ( ? support-rim-type-kramdown => direct / indirect )
@@ -42,6 +50,11 @@ support-rim-type-kramdown = 74
 support-rim-format = 75
 support-rim-uri-global = 76
 rim-reference = 77
+boot-events = 78
+boot-event-number = 79
+boot-event-type = 80
+boot-digest-list = 81
+boot-event-data = 82
 
 direct = 0
 indirect = 1
@@ -97,17 +110,17 @@ tcb-info.fwids = [
     ]
 ]
 
-object = 78
-tcb-info.id = 79
-tcb-info.key-elements = 80
-tcb-info.vendor = 81
-tcb-info.model = 82
-tcb-info.layer = 83
-tcb-info.index = 84
-tcb-info.type = 85
-tcb-info.version = 86
-tcb-info.SVN = 87
-tcb-info.flags = 88
-tcb-info.fwids = 89
-tcb-info.vendorinfo = 90
-tcb-info.vendormask = 91
+object = 83
+tcb-info.id = 84
+tcb-info.key-elements = 85
+tcb-info.vendor = 86
+tcb-info.model = 87
+tcb-info.layer = 88
+tcb-info.index = 89
+tcb-info.type = 90
+tcb-info.version = 91
+tcb-info.SVN = 92
+tcb-info.flags = 93
+tcb-info.fwids = 94
+tcb-info.vendorinfo = 95
+tcb-info.vendormask = 96
