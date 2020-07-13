@@ -1,0 +1,343 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2020-07-13T15:24:43.915639+00:00",
+  "repo": "ietf-rats/draft-birkholz-rats-coswid-rim",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 5,
+      "id": "MDU6SXNzdWU1NzgyMDMwODY=",
+      "title": "Defintion of firmware-model-name",
+      "url": "https://github.com/ietf-rats/draft-birkholz-rats-coswid-rim/issues/5",
+      "state": "OPEN",
+      "author": "henkbirkholz",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The semantics of this definition seem to be a bit off? Also, cross-check with firmware-manufacturer-name.",
+      "createdAt": "2020-03-09T21:30:58Z",
+      "updatedAt": "2020-03-09T21:30:58Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "MDExOlB1bGxSZXF1ZXN0MzgzNzE5ODEw",
+      "title": "Fixing a few small typos",
+      "url": "https://github.com/ietf-rats/draft-birkholz-rats-coswid-rim/pull/1",
+      "state": "MERGED",
+      "author": "puiterwijk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2020-03-04T17:20:45Z",
+      "updatedAt": "2020-03-10T04:43:39Z",
+      "closedAt": "2020-03-09T09:08:49Z",
+      "mergedAt": "2020-03-09T09:08:49Z",
+      "mergedBy": "henkbirkholz",
+      "comments": [
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "body": "looks fine. Thanks!",
+          "createdAt": "2020-03-09T09:08:44Z",
+          "updatedAt": "2020-03-09T09:08:44Z"
+        }
+      ],
+      "reviews": [],
+      "baseRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
+      "baseRefName": "master",
+      "baseRefOid": "c0047e3e1c9e326b23fcc0278cdf98ae718a9ad8",
+      "headRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
+      "headRefName": "typofixes",
+      "headRefOid": "48c6277c5e5a689faae1b273afb073a22906964f",
+      "mergeCommit": {
+        "oid": "7adfe6f07538f4bc1deb19f8e673aee61c8207ec"
+      }
+    },
+    {
+      "number": 2,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzg1NjQ5NDQx",
+      "title": "Initial draft for package manager usecase",
+      "url": "https://github.com/ietf-rats/draft-birkholz-rats-coswid-rim/pull/2",
+      "state": "MERGED",
+      "author": "puiterwijk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Patrick Uiterwijk <puiterwijk@redhat.com>",
+      "createdAt": "2020-03-09T15:18:18Z",
+      "updatedAt": "2020-03-09T15:45:03Z",
+      "closedAt": "2020-03-09T15:45:03Z",
+      "mergedAt": "2020-03-09T15:45:03Z",
+      "mergedBy": "henkbirkholz",
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzcxMjg5NDAy",
+          "commit": {
+            "abbreviatedOid": "40d0842"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-09T15:34:26Z",
+          "updatedAt": "2020-03-09T15:44:49Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "LGTM",
+              "createdAt": "2020-03-09T15:34:26Z",
+              "updatedAt": "2020-03-09T15:44:49Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "Requires a bit more \"how\", but this will go into CDDL & subsections, mainly",
+              "createdAt": "2020-03-09T15:44:32Z",
+              "updatedAt": "2020-03-09T15:44:49Z"
+            }
+          ]
+        }
+      ],
+      "baseRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
+      "baseRefName": "master",
+      "baseRefOid": "264e04327e0ae3673703d1dc502dc596b8c41cbf",
+      "headRepository": "puiterwijk/draft-birkholz-rats-coswid-rim",
+      "headRefName": "package_manager_adaption",
+      "headRefOid": "40d0842c906f0222f3fbd7dd446697f8f4f609fe",
+      "mergeCommit": {
+        "oid": "8a16e6a92848dc37b81af0ffc9a3ff6d9082774e"
+      }
+    },
+    {
+      "number": 3,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzg1NjYxNDQz",
+      "title": "Only require firmware- fields for CoSWID RIMs that cover firmware",
+      "url": "https://github.com/ietf-rats/draft-birkholz-rats-coswid-rim/pull/3",
+      "state": "MERGED",
+      "author": "puiterwijk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Patrick Uiterwijk <puiterwijk@redhat.com>",
+      "createdAt": "2020-03-09T15:38:27Z",
+      "updatedAt": "2020-03-09T15:46:40Z",
+      "closedAt": "2020-03-09T15:46:40Z",
+      "mergedAt": "2020-03-09T15:46:40Z",
+      "mergedBy": "henkbirkholz",
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzcxMjk5OTg3",
+          "commit": {
+            "abbreviatedOid": "7fa9ca6"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-09T15:46:14Z",
+          "updatedAt": "2020-03-09T15:46:24Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "There might be consequences beyond we know at -00, but that is fine. Relationship with SUIT is also still open for exploration.",
+              "createdAt": "2020-03-09T15:46:15Z",
+              "updatedAt": "2020-03-09T15:46:24Z"
+            }
+          ]
+        }
+      ],
+      "baseRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
+      "baseRefName": "master",
+      "baseRefOid": "264e04327e0ae3673703d1dc502dc596b8c41cbf",
+      "headRepository": "puiterwijk/draft-birkholz-rats-coswid-rim",
+      "headRefName": "firmware-fixes",
+      "headRefOid": "7fa9ca6488fed9e7daabc2331cde1ca98c36ec6c",
+      "mergeCommit": {
+        "oid": "be778643c45b5b57ad2956f438cd64e0e70056fe"
+      }
+    },
+    {
+      "number": 4,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzg1Njc1NTMx",
+      "title": "Add a payload-rim attribute",
+      "url": "https://github.com/ietf-rats/draft-birkholz-rats-coswid-rim/pull/4",
+      "state": "MERGED",
+      "author": "puiterwijk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Patrick Uiterwijk <puiterwijk@redhat.com>",
+      "createdAt": "2020-03-09T16:04:04Z",
+      "updatedAt": "2020-03-09T20:20:03Z",
+      "closedAt": "2020-03-09T20:20:03Z",
+      "mergedAt": "2020-03-09T20:20:03Z",
+      "mergedBy": "henkbirkholz",
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3MzcxNDk5MTg3",
+          "commit": {
+            "abbreviatedOid": "d7a1dd7"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-03-09T20:19:29Z",
+          "updatedAt": "2020-03-09T20:19:53Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Will fix the quantity according to the changes below after merging the PR.",
+              "createdAt": "2020-03-09T20:19:30Z",
+              "updatedAt": "2020-03-09T20:19:53Z"
+            }
+          ]
+        }
+      ],
+      "baseRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
+      "baseRefName": "master",
+      "baseRefOid": "be778643c45b5b57ad2956f438cd64e0e70056fe",
+      "headRepository": "puiterwijk/draft-birkholz-rats-coswid-rim",
+      "headRefName": "package_manager_adaption",
+      "headRefOid": "d7a1dd71c80f47d0481f444743609666143cab96",
+      "mergeCommit": {
+        "oid": "7f2c894016f04b8d77965cfef1d05ee100a03489"
+      }
+    },
+    {
+      "number": 6,
+      "id": "MDExOlB1bGxSZXF1ZXN0Mzk2MjAyNzc2",
+      "title": "Add RPM version scheme",
+      "url": "https://github.com/ietf-rats/draft-birkholz-rats-coswid-rim/pull/6",
+      "state": "MERGED",
+      "author": "puiterwijk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Patrick Uiterwijk <puiterwijk@redhat.com>",
+      "createdAt": "2020-03-31T09:38:52Z",
+      "updatedAt": "2020-03-31T11:51:46Z",
+      "closedAt": "2020-03-31T10:48:22Z",
+      "mergedAt": "2020-03-31T10:48:22Z",
+      "mergedBy": "henkbirkholz",
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3Mzg0NjE0MDk1",
+          "commit": {
+            "abbreviatedOid": "6c56cad"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "An excellent starting point. Bit more precise values types and a few 'harder' than e.g. \"difference\" (to what purpose is what differentiated in this multi-step process) are still required.",
+          "createdAt": "2020-03-31T10:48:10Z",
+          "updatedAt": "2020-03-31T10:48:10Z",
+          "comments": []
+        }
+      ],
+      "baseRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
+      "baseRefName": "master",
+      "baseRefOid": "fbd56fe93b11b44111e2f5f2089303a40f69399a",
+      "headRepository": "puiterwijk/draft-birkholz-rats-coswid-rim",
+      "headRefName": "rpm_version",
+      "headRefOid": "6c56cad91b7f2a334218828a89c8d01183fd2c3e",
+      "mergeCommit": {
+        "oid": "8803542c7494bd584153109de94e24ff4ba1f6ef"
+      }
+    },
+    {
+      "number": 7,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDEyODczMzQ2",
+      "title": "include boot events ",
+      "url": "https://github.com/ietf-rats/draft-birkholz-rats-coswid-rim/pull/7",
+      "state": "OPEN",
+      "author": "shwethab",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "include boot events - to cover secure boot keys, and all other artifacts in measured boot ",
+      "createdAt": "2020-05-04T10:43:50Z",
+      "updatedAt": "2020-07-13T15:24:27Z",
+      "baseRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
+      "baseRefName": "master",
+      "baseRefOid": "8803542c7494bd584153109de94e24ff4ba1f6ef",
+      "headRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
+      "headRefName": "sprim",
+      "headRefOid": "5941b043de606e071cd6a7d051bc49f4c0726614",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDQ3MzU1NjIw",
+          "commit": {
+            "abbreviatedOid": "5941b04"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-07-13T15:24:27Z",
+          "updatedAt": "2020-07-13T15:24:27Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}
