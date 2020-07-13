@@ -17,10 +17,10 @@ reference-measurement-entry = {
   rim-link-hash => bytes,
 }
 
-$$payload-extension //= ( ? support-rim-type-kramdown => direct / indirect, )
-$$payload-extension //= ( ? support-rim-format => text, )
-$$payload-extension //= ( ? support-rim-uri-global => any-uri, )
-$$payload-extension //= ( ? rim-reference => any-uri, )
+$$payload-extension //= ( ? support-rim-type-kramdown => direct / indirect )
+$$payload-extension //= ( ? support-rim-format => text )
+$$payload-extension //= ( ? support-rim-uri-global => any-uri )
+$$payload-extension //= ( ? rim-reference => any-uri )
 
 reference-measurement = 58
 payload-type = 59
@@ -52,3 +52,62 @@ $$directory-extension //= ( ? hash => hash-entry )
 $$resource-extension //= ( ? hash => hash-entry )
 
 $$process-extension //= ( ? hash => hash-entry )
+
+$$link-extension //= ( ? thumbprint => hash-entry )
+
+$$resource-collection-extension //= (
+  ? object => object-entry / [ 2* object-entry ]
+)
+
+object-entry = { 
+  resource-collection,
+  tcb-info,
+  $$object-extension,
+}
+
+tcb-info = (
+  tcb-info.id => hash-entry, 
+  tcb-info.key-elements => {
+    tcb-info.vendor => text,
+    ? tcb-info.model => text,
+    ? tcb-info.layer => int,
+    ? tcb-info.index => int,
+    tcb-info.type => tagged-bytes / uuid-bytes,
+  },
+  ? tcb-info.version => text,
+  ? tcb-info.SVN => int,
+  ? tcb-info.flags => uint .bits tcb-info.operational-flags,
+  ? tcb-info.fwids,
+  ? tcb-info.vendorinfo => bytes .size 8,
+  ? tcb-info.vendormask => bytes,
+)
+
+uuid-bytes = bytes .size 8
+
+tcb-info.operational-flags = &(
+  not-configured: 0,
+  not-secure: 1,
+  recovery: 2,
+  debug: 3,
+)
+
+tcb-info.fwids = [
+  + [ hash-alg: [ * int ] / text,
+      digest: bytes,
+    ]
+]
+
+object = 78
+tcb-info.id = 79
+tcb-info.key-elements = 80
+tcb-info.vendor = 81
+tcb-info.model = 82
+tcb-info.layer = 83
+tcb-info.index = 84
+tcb-info.type = 85
+tcb-info.version = 86
+tcb-info.SVN = 87
+tcb-info.flags = 88
+tcb-info.fwids = 89
+tcb-info.vendorinfo = 90
+tcb-info.vendormask = 91
