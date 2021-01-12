@@ -7,16 +7,33 @@
 <title>Reference Integrity Measurement Extension for Concise Software Identities</title>
 <meta content="Henk Birkholz" name="author">
 <meta content="Patrick Uiterwijk" name="author">
-<meta content="Ned Smith" name="author">
-<meta content="Jessica Fitzgerald-McKay" name="author">
 <meta content="David Waltermire" name="author">
 <meta content="Shwetha Bhandari" name="author">
+<meta content="Jessica Fitzgerald-McKay" name="author">
 <meta content="
-       Concise Software Identification (CoSWID) tags identify and describe individual software components, patches, and installation bundles. CoSWID is based on ISO/IEC 19770-2:2015 2:2015 that provides a complementary XML schema definition (XSD) for Software Identification (SWID) tags. CoSWID supports the same features as the corresponding XML SWID tags. The CoSWID specification also includes more structured extensibility features and reduces a few of ambiguities that are not explicitly resolved in the ISO XSD. In this document, these extensibility features (extension points) are used to add attributes to the CoSWID specification. The new attributes allow for the use of CoSWID as Reference Integrity Measurements (RIM). There are three set of RIM features defined in this specification. 1.) attributes that support RIM manifests for Measured Boot, 2.) attributes that support package manager managed structures, and 3.) attributes that allow for OID to be used in the description of Reference Integrity Measurements. 
+       This document specifies the CDDL and usage description for Reference Integrity Measurements (RIM) in Remote Attestation Procedures (RATS). The specification is based on Concise Software Identification (CoSWID) and TCG Reference Integrity Manifest Information Model -- based on Host Integrity at Runtime and Start-up (HIRS). Extension points defined in CoSWID used to augment CoSWID tags with new attributes that can express the TCG Reference Integrity Manifest extensions. 
     " name="description">
-<meta content="xml2rfc 2.46.0" name="generator">
+<meta content="xml2rfc 3.5.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-birkholz-rats-coswid-rim-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.5.0
+    Python 3.8.5
+    appdirs 1.4.4
+    ConfigArgParse 1.2.3
+    google-i18n-address 2.4.0
+    html5lib 1.1
+    intervaltree 3.0.2
+    Jinja2 2.11.2
+    kitchen 1.2.6
+    lxml 4.5.0
+    pycountry 19.8.18
+    pyflakes 2.1.1
+    PyYAML 5.3.1
+    requests 2.22.0
+    setuptools 45.2.0
+    six 1.14.0
+-->
 <link href="draft-birkholz-rats-coswid-rim.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
@@ -79,9 +96,6 @@ p {
   padding: 0;
   margin: 0.5em 0;
   text-align: left;
-}
-div, span {
-  position: relative;
 }
 div {
   margin: 0;
@@ -274,9 +288,19 @@ cite {
 
 /* tables */
 table {
-  width: 100%;
+  max-width: 100%;
   margin: 0 0 1em;
   border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
 }
 thead, tbody {
   border: 1px solid var(--line-color);
@@ -287,8 +311,7 @@ th, td {
   padding: 5px 10px;
 }
 th {
-  text-align: left;
-  background-color: #eee;
+  background-color: var(--line-color);
 }
 tr:nth-child(2n) > td {
   background-color: var(--background-color);
@@ -307,8 +330,6 @@ table caption {
   padding: 3px 1em;
 }
 table p {
-  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
-     be allowed within tables more generally, it would be far better to select on a class. */
   margin: 0;
 }
 
@@ -766,21 +787,6 @@ address div.right {
   text-align: right;
 }
 
-/* Provide table alignment support.  We can't use the alignX classes above
-   since they do unwanted things with caption and other styling. */
-table.right {
- margin-left: auto;
- margin-right: 0;
-}
-table.center {
- margin-left: auto;
- margin-right: auto;
-}
-table.left {
- margin-left: 0;
- margin-right: auto;
-}
-
 /* Give the table caption label the same styling as the figcaption */
 
 @media print {
@@ -816,11 +822,11 @@ table.left {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoSWID RIM</td>
-<td class="right">July 2020</td>
+<td class="right">January 2021</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Birkholz, et al.</td>
-<td class="center">Expires 14 January 2021</td>
+<td class="center">Expires 16 July 2021</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -833,12 +839,12 @@ table.left {
 <dd class="internet-draft">draft-birkholz-rats-coswid-rim-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-07-13" class="published">13 July 2020</time>
+<time datetime="2021-01-12" class="published">12 January 2021</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2021-01-14">14 January 2021</time></dd>
+<dd class="expires"><time datetime="2021-07-16">16 July 2021</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -850,14 +856,6 @@ table.left {
 <div class="org">Red Hat</div>
 </div>
 <div class="author">
-      <div class="author-name">N. Smith</div>
-<div class="org">Intel</div>
-</div>
-<div class="author">
-      <div class="author-name">J. Fitzgerald-McKay</div>
-<div class="org">Department of Defense</div>
-</div>
-<div class="author">
       <div class="author-name">D. Waltermire</div>
 <div class="org">NIST</div>
 </div>
@@ -865,13 +863,17 @@ table.left {
       <div class="author-name">S. Bhandari</div>
 <div class="org">Cisco</div>
 </div>
+<div class="author">
+      <div class="author-name">J. Fitzgerald-McKay</div>
+<div class="org">Department of Defense</div>
+</div>
 </dd>
 </dl>
 </div>
 <h1 id="title">Reference Integrity Measurement Extension for Concise Software Identities</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">Concise Software Identification (CoSWID) tags identify and describe individual software components, patches, and installation bundles. CoSWID is based on ISO/IEC 19770-2:2015 2:2015 that provides a complementary XML schema definition (XSD) for Software Identification (SWID) tags. CoSWID supports the same features as the corresponding XML SWID tags. The CoSWID specification also includes more structured extensibility features and reduces a few of ambiguities that are not explicitly resolved in the ISO XSD. In this document, these extensibility features (extension points) are used to add attributes to the CoSWID specification. The new attributes allow for the use of CoSWID as Reference Integrity Measurements (RIM). There are three set of RIM features defined in this specification. 1.) attributes that support RIM manifests for Measured Boot, 2.) attributes that support package manager managed structures, and 3.) attributes that allow for OID to be used in the description of Reference Integrity Measurements.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document specifies the CDDL and usage description for Reference Integrity Measurements (RIM) in Remote Attestation Procedures (RATS). The specification is based on Concise Software Identification (CoSWID) and TCG Reference Integrity Manifest Information Model -- based on Host Integrity at Runtime and Start-up (HIRS). Extension points defined in CoSWID used to augment CoSWID tags with new attributes that can express the TCG Reference Integrity Manifest extensions.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note" id="section-note.1">
       <h2 id="name-note-to-readers">
@@ -902,7 +904,7 @@ table.left {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 January 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 16 July 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -911,7 +913,7 @@ table.left {
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2020 IETF Trust and the persons identified as the
+            Copyright (c) 2021 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -930,8 +932,8 @@ table.left {
         <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
 <a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
         </h2>
-<nav class="toc"><ul class="toc compact ulEmpty">
-<li class="toc compact ulEmpty" id="section-toc.1-1.1">
+<nav class="toc"><ul class="ulEmpty toc compact">
+<li class="ulEmpty toc compact" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-toc.1-1.1.1" class="pilcrow">¶</a></p>
 <ul class="ulEmpty toc compact">
 <li class="ulEmpty toc compact" id="section-toc.1-1.1.2.1">
@@ -939,47 +941,38 @@ table.left {
 </li>
             </ul>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-coswid-attribute-extensions" class="xref">CoSWID Attribute Extensions</a><a href="#section-toc.1-1.2.1" class="pilcrow">¶</a></p>
+          <li class="ulEmpty toc compact" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-coswid-attribute-extensions" class="xref">CoSWID Attribute Extensions for RIM</a><a href="#section-toc.1-1.2.1" class="pilcrow">¶</a></p>
 <ul class="ulEmpty toc compact">
 <li class="ulEmpty toc compact" id="section-toc.1-1.2.2.1">
                 <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-rim-requirements-on-existin" class="xref">RIM requirements on existing CoSWID attributes</a><a href="#section-toc.1-1.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="ulEmpty toc compact" id="section-toc.1-1.2.2.2">
-                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-rim-extensions-for-measured" class="xref">RIM Extensions for Measured Boot</a><a href="#section-toc.1-1.2.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-rim-extensions-for-hirs" class="xref">RIM Extensions for HIRS</a><a href="#section-toc.1-1.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="ulEmpty toc compact" id="section-toc.1-1.2.2.3">
                 <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-rim-extensions-for-software" class="xref">RIM Extensions for Software Package Management</a><a href="#section-toc.1-1.2.2.3.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.2.2.4">
-                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-rim-extensions-for-composit" class="xref">RIM Extensions for Composite Device</a><a href="#section-toc.1-1.2.2.4.1" class="pilcrow">¶</a></p>
 <ul class="ulEmpty toc compact">
-<li class="ulEmpty toc compact" id="section-toc.1-1.2.2.4.2.1">
-                    <p id="section-toc.1-1.2.2.4.2.1.1"><a href="#section-2.4.1" class="xref">2.4.1</a>.  <a href="#name-the-tcb-info-group" class="xref">The tcb-info Group</a><a href="#section-toc.1-1.2.2.4.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                  <li class="ulEmpty toc compact" id="section-toc.1-1.2.2.4.2.2">
-                    <p id="section-toc.1-1.2.2.4.2.2.1"><a href="#section-2.4.2" class="xref">2.4.2</a>.  <a href="#name-coswid-version-scheme-for-r" class="xref">CoSWID Version Scheme for RPM</a><a href="#section-toc.1-1.2.2.4.2.2.1" class="pilcrow">¶</a></p>
+<li class="ulEmpty toc compact" id="section-toc.1-1.2.2.3.2.1">
+                    <p id="section-toc.1-1.2.2.3.2.1.1"><a href="#section-2.3.1" class="xref">2.3.1</a>.  <a href="#name-coswid-version-scheme-for-r" class="xref">CoSWID Version Scheme for RPM</a><a href="#section-toc.1-1.2.2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 </li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.2.2.5">
-                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="xref">2.5</a>.  <a href="#name-additional-measurement-attr" class="xref">Additional Measurement Attributes for CoSWID</a><a href="#section-toc.1-1.2.2.5.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="ulEmpty toc compact" id="section-toc.1-1.2.2.6">
-                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="xref">2.6</a>.  <a href="#name-coswid-rim-cddl" class="xref">CoSWID RIM CDDL</a><a href="#section-toc.1-1.2.2.6.1" class="pilcrow">¶</a></p>
+              <li class="ulEmpty toc compact" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-coswid-rim-cddl" class="xref">CoSWID RIM CDDL</a><a href="#section-toc.1-1.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.3">
+          <li class="ulEmpty toc compact" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-privacy-considerations" class="xref">Privacy Considerations</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.4">
+          <li class="ulEmpty toc compact" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.5">
+          <li class="ulEmpty toc compact" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.6">
+          <li class="ulEmpty toc compact" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-references" class="xref">References</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
 <ul class="ulEmpty toc compact">
 <li class="ulEmpty toc compact" id="section-toc.1-1.6.2.1">
@@ -990,7 +983,7 @@ table.left {
 </li>
             </ul>
 </li>
-          <li class="toc compact ulEmpty" id="section-toc.1-1.7">
+          <li class="ulEmpty toc compact" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
@@ -1002,16 +995,13 @@ table.left {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Reference Integrity Measurements describe the intended state of (composite) software components installed on a (composite) device. A measurement of all installed software components of a devices allows for assertions about the trustworthiness of the given device. In combination with a root of trust (RoT) for reporting (RTR), these measurements can be refined into evidence and enable IETF Remote ATtestation procedureS (RATS). RATS support the decision process of whether to put trust in the trustworthiness of a device - or not.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">The RATS architecture <span>[<a href="#I-D.ietf-rats-architecture" class="xref">I-D.ietf-rats-architecture</a>]</span> defines the roles Verifiers, Attesters, Endorsers, and Relying Parties. The RATS architecture also specifies that Attestation Evidence is created by Attesters and consumed by Verifiers. Ultimately, the goal is to enable a Relying Party to put trust in the trustworthiness of a remote peer (the Attester). Attestation Evidence is composed of believable assertions about an Attester's trustworthiness characteristics. In RATS, these assertions are called Claims. The Verifier conducts a set of appraisal procedures in order to assess the compliance of an Attester's trustworthiness characteristics.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">A prominent appraisal procedure in RATS is the comparison of Claim values included in Attestation Evidence with Reference Claim values provided by Endorsers (e.g. supply chain entities). The comparison of Claim values via Reference Claim values is vital for the assessment of compliance metrics with respect to software components installed on an Attester. A typical objective here is the remediation of already vulnerabilities discovered in certain versions of software components.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">The Integrity Measurement Architecture (IMA) of the Linux Security Modules (LSM) provides a detailed Event Log (sometimes also referred to as a Measurement Log) that retains a sequence of hash measurements of every software sub-component (e.g. a firmware, an ELF executable, or a configuration file) that is created and appended to the sequence of measurements that composes the event log before the software component in question is started or read.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">In essence, to enable this appraisal procedure conducted by Verfiers an Attester's IMA provides Event Logs that include the hash values of every started software component and therefore are part of the Attestation Evidence an Attester creates. The complementary well-known-values that Verifiers require are included in the Reference Integrity Measurements (RIM). RIMs can be provided via Software Identification tags created by Endorsers, such as the software creators, manufacturers, vendors, or other trusted third parties (e.g. supply chain or certification entities).<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">This document provides an extension to the CoSWID specification defined in <span>[<a href="#I-D.ietf-sacm-coswid" class="xref">I-D.ietf-sacm-coswid</a>]</span>. The extension adds attributes to CoSWID tags that enable them to express RIMs. One prominent subset of these attributes are illustrated in the TCG Reference Integrity Manifest Information Model [ref] specification. These attributes are added to the existing CoSWID specification via the most general extension point the CoSWID specification provides: $$coswid-extensions. An additional map definition named "reference-measurements" is added and is defined in section [ref] of this document. Another prominent subset is the addition of an object tree next to the file system tree as defined by <span>[<a href="#I-D.ietf-sacm-coswid" class="xref">I-D.ietf-sacm-coswid</a>]</span>. The object tree enables the representation of multiple layered execution environments as described by the Layered Attestation concept in the RATS architecture <span>[<a href="#I-D.ietf-rats-architecture" class="xref">I-D.ietf-rats-architecture</a>]</span>.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">Furthermore, a usage profile for signed CoSWID tags is defined in this specification in support of the software-component structure of systems managed by package managers. Signed CoSWID tags that are aligned with that software model can be used to describe the contents of one or multiple of the packages that make up the contents of a system.
-In this case, it may be that multiple CoSWID tags are provided as Reference Claim values for a attestation by a single Attester.
-In order to minimize the impact on the sizes of packages, it is likely that any CoSWID tags delivered as part of packages as part of a package manager managed system will not contain actual reference values, but instead a link-entry to a CoSWID tag published by the vendor in a repository.<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">Reference Integrity Measurements are a subset of the Conceptual Messages defined as Endorsements. RIMs provide a vital resource to be consumed by Verifiers in conjunction with Appraisal Policies and Evidence. While RIMs represent nominal values, Appraisal Policies represent imperative guidance how to use nominal values in an appraisal procedure. Evidence represents assertions about the trustworthiness of a device's Target Environments created by its own Attesting Environment. As Evidence can be rather complex and its appraisal therefore a  burden for Relying Parties that are interested in trustworthiness evaluations, Verifies take on this duty and create easier to digest Attestation Results for Relying Parties. In consequence, Verifiers are the entities that have to put trust in the provenance and integrity of RIMs - and Endorsements in general - relying on proof of integrity and authenticity.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-1">Reference Integrity Measurements describe the intended state of (composite) software components installed on a (composite) device. A measurement of all installed software components of a devices allows for assertions about the trustworthiness of the given device. In combination with a root of trust (RoT) for reporting (RTR), these measurements can be refined into evidence and enable Remote ATtestation procedureS (RATS). RATS support the decision process of whether to put trust in the trustworthiness of a device -- or not.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The RATS architecture <span>[<a href="#I-D.ietf-rats-architecture" class="xref">I-D.ietf-rats-architecture</a>]</span> defines the following roles: Verifier, Attester, Endorse, and Relying Party, and Reference Value Provider. The RATS architecture also specifies that attestation Evidence is created by Attesters and consumed by Verifiers. Ultimately, the goal is to enable a Relying Party to put trust in the trustworthiness of a remote peer (the Attester). Attestation Evidence is composed of believable assertions about an Attester's trustworthiness characteristics. In RATS, these assertions are called Claims. The Verifier conducts a set of appraisal procedures in order to assess the compliance of an Attester's trustworthiness characteristics.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">A prominent appraisal procedure in RATS is the comparison of Claim values included in attestation Evidence with reference Claim values provided by Reference Value Providers (RVP, e.g. a supply chain entity). The comparison of Claim values via Reference Claim Values (RCV) is vital for the assessment of compliance metrics with respect to software components installed on an Attester. A typical objective here is the remediation of vulnerabilities discovered in certain versions of installed software components.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">The Integrity Measurement Architecture (IMA) of the Linux Security Modules (LSM) provides a detailed Event Log (sometimes also referred to as a Measurement Log) that retains a sequence of hash measurements of every software sub-component (e.g. a firmware, an ELF executable, or a configuration file) that is created and appended to the sequence of measurements that composes the event log before the software component in question is started or read -- "first measure, than start".<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">In essence, to enable this appraisal procedure conducted by Verfiers an Attester's IMA provides Event Logs that include the hash values of every started software component and therefore are part of the attestation Evidence an Attester creates. The complementary well-known-values that Verifiers require are included in the Reference Integrity Measurements (RIM). RIMs for software components can be provided via Concise Software Identification (CoSWID) tags created or maintained by RVPs, such as the software creators, manufacturers, vendors, or other trusted third parties (e.g. a certification entity).<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">This document provides an extension to the CoSWID specification defined in <span>[<a href="#I-D.ietf-sacm-coswid" class="xref">I-D.ietf-sacm-coswid</a>]</span>. The extension adds attributes to CoSWID tags that enable them to express RIMs. One prominent subset of these attributes are illustrated in the TCG Reference Integrity Manifest Information Model [ref] specification. These attributes are added to the existing CoSWID specification via the most general extension point the CoSWID specification provides: $$coswid-extensions. An new map type-definition named "reference-values" is added and is defined in section [ref] of this document.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">Furthermore, a usage profile for signed CoSWID tags is defined in this specification in support of the software-component structure of systems managed by package managers. Signed CoSWID tags that are aligned with that software model can be used to describe the contents of one or multiple of the packages that make up the contents of a system. In order to minimize the impact on the sizes of packages, it is likely that any CoSWID tags delivered as part of packages as part of a package manager managed system will not contain actual reference values, but instead a link-entry to a CoSWID tag published by the vendor in a repository.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <div id="requirements-notation">
 <section id="section-1.1">
         <h3 id="name-requirements-notation">
@@ -1026,20 +1016,16 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 </div>
 </section>
 </div>
-<div id="coswid-attribute-extensions">
+<div id="coswid-attribute-extensions-for-rim">
 <section id="section-2">
       <h2 id="name-coswid-attribute-extensions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-coswid-attribute-extensions" class="section-name selfRef">CoSWID Attribute Extensions</a>
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-coswid-attribute-extensions" class="section-name selfRef">CoSWID Attribute Extensions for RIM</a>
       </h2>
-<p id="section-2-1">This specification defines four types of attribute sets that can be added to the CoSWID specification via its defined extension points.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-1">This specification defines two types of attribute sets that can be added to the CoSWID specification via the specified defined extension points:<a href="#section-2-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-2-2">
-        <li id="section-2-2.1">Attributes that support RIM manifests for Measured Boot (often referred to as Secure Boot),<a href="#section-2-2.1" class="pilcrow">¶</a>
+<li id="section-2-2.1">Attributes that support RIM manifests for Measured Boot (often referred to as Secure Boot) and<a href="#section-2-2.1" class="pilcrow">¶</a>
 </li>
-        <li id="section-2-2.2">Attributes that support the RPM package manager structure,<a href="#section-2-2.2" class="pilcrow">¶</a>
-</li>
-        <li id="section-2-2.3">Attributes that allow to represent composite devices including several Target Environments, and<a href="#section-2-2.3" class="pilcrow">¶</a>
-</li>
-        <li id="section-2-2.4">Attributes that allow for OID to be used in the description of Reference Integrity Measurements.<a href="#section-2-2.4" class="pilcrow">¶</a>
+        <li id="section-2-2.2">Attributes that support the RPM package manager structure.<a href="#section-2-2.2" class="pilcrow">¶</a>
 </li>
       </ol>
 <div id="rim-requirements-on-existing-coswid-attributes">
@@ -1051,10 +1037,10 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
 <p id="section-2.1-2">The 'software-meta-entry' type defined in the CoSWID specification includes the optional members 'product', 'colloquial-version', 'revision', and 'edition'. These four members MUST be included in a CoSWID RIM in order to compose a valid Reference Integrity Measurement in alignment with NIST IR 8060. Furthermore, the semantics of the text (tstr) typed values MUST convey content that allows for semantic interoperability in a given scope (e.g., an administrative domain). The software-meta-entries provide vital support for steering decisions made by the RATS verifier role in order to enable discovery and matching of related or additional CoSWID RIM available to or discoverable by the verifier.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="rim-extensions-for-measured-boot">
+<div id="rim-extensions-for-hirs">
 <section id="section-2.2">
-        <h3 id="name-rim-extensions-for-measured">
-<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-rim-extensions-for-measured" class="section-name selfRef">RIM Extensions for Measured Boot</a>
+        <h3 id="name-rim-extensions-for-hirs">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-rim-extensions-for-hirs" class="section-name selfRef">RIM Extensions for HIRS</a>
         </h3>
 <p id="section-2.2-1">The following attributes are derived from the TCG Reference Integrity Manifest Information Model [ref] specification. These attributes support the creation of very small CoSWID RIM tags that enable the Remote Integrity Verification (RIV <span>[<a href="#I-D.fedorkow-rats-network-device-attestation" class="xref">I-D.fedorkow-rats-network-device-attestation</a>]</span>) of small things, i.e., constrained devices in constrained network environments. In consequence, the majority of the attributes listed in this section represent metadata about firmware and supply chain entities that provide firmware for a device (platform). Analogously to the mandated software-meta-entries illustrated above, the attributes defined in the table below provide more context and enable steering decisions for the appraisal procedures of a Verifier. Consecutively, RIM have to be managed and curated in a consistent manner so that there is no significant threshold for a Verifier to make use of them during an appraisal procedure.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">The design of the additional RIM attributes in this section is motivated by the vast variety of identifier types used in production today, e.g. endorsement documents <span>[<a href="#I-D.ietf-rats-architecture" class="xref">I-D.ietf-rats-architecture</a>]</span> that are enrolled or on-boarded on the Attester itself. It is vital to highlight that this variety can render semantic self-descriptiveness more difficult. Most importantly though: interoperability beats self-descriptiveness. A convergence towards a common identification scheme with respect to software components and its subset that is firmware is highly encouraged - alas not achieved at the time of creating this proposed standard. The following table defines the semantics of the set of new members that are added via the reference-measurement-entry map. The reference-measurement-entry map is added using the $$coswid-extension CDDL extension point.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
@@ -1165,155 +1151,42 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
             </tr>
           </tbody>
         </table>
-</section>
-</div>
-<div id="rim-extensions-for-composite-device">
-<section id="section-2.4">
-        <h3 id="name-rim-extensions-for-composit">
-<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-rim-extensions-for-composit" class="section-name selfRef">RIM Extensions for Composite Device</a>
-        </h3>
-<p id="section-2.4-1">Attesters that are composite devices can include several Target Environments. Some of these Target Environments can take on the duties of Attesting Environments during a boot sequence as described in section 4.3. of the RATS architecture <span>[<a href="#I-D.ietf-rats-architecture" class="xref">I-D.ietf-rats-architecture</a>]</span>. The corresponding procedure is called Layered Attestation and requires a dedicated RIM for each Target Environment of the Attester. The addition of object tree attributes to CoSWID using the $$resource-collection-extension extension point addresses the resulting requirements.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">Each Target Environment involved in Layered Attestation can be considered its own Trusted Computing Base (TCB) [ref]. TCB metadata can be used to identify or locate RIMs. The addition of TCB information to the new object tree structure is in support of these identifiers for RIM discovery.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
-<p id="section-2.4-3">Additionally, software components started in these Target Environments might not be referenceable via a filesystem (e.g., in the case of firmware). To enable RIMs to represent firmware items that are not associated with a filesystem, attributes for object trees are added to the existing filesystem items tree.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
-<div id="the-tcb-info-group">
-<section id="section-2.4.1">
-          <h4 id="name-the-tcb-info-group">
-<a href="#section-2.4.1" class="section-number selfRef">2.4.1. </a><a href="#name-the-tcb-info-group" class="section-name selfRef">The tcb-info Group</a>
-          </h4>
-<p id="section-2.4.1-1">Every object in the object tree can be represented with a set of metadata items pertaining a specific TCB. The following items can be associated with a dedicate object-entry:<a href="#section-2.4.1-1" class="pilcrow">¶</a></p>
-<table class="center" id="table-3">
-            <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
-<thead>
-              <tr>
-                <th class="text-left" rowspan="1" colspan="1">Attribute Name</th>
-                <th class="text-left" rowspan="1" colspan="1">Quantity</th>
-                <th class="text-left" rowspan="1" colspan="1">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.id</td>
-                <td class="text-left" rowspan="1" colspan="1">1</td>
-                <td class="text-left" rowspan="1" colspan="1">A hash of the tcb-info.key-elements value including the map structure</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.key-elements</td>
-                <td class="text-left" rowspan="1" colspan="1">1</td>
-                <td class="text-left" rowspan="1" colspan="1">A collection of attributes that disambiguates the various TCB objects in a composite device scope</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.vendor</td>
-                <td class="text-left" rowspan="1" colspan="1">1</td>
-                <td class="text-left" rowspan="1" colspan="1">The entity that named the measurement of the Target Environment TCB referenced by an object-entry</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.model</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">The product name associated with the object-entry in a measurement</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.layer</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">The layer in the composite devive (and therefore object tree) of the TCB associated with the object-entry in a measurement</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.index</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">An index that enumerates TCB/object-entries in a CoSWID RIM tag</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.type</td>
-                <td class="text-left" rowspan="1" colspan="1">1</td>
-                <td class="text-left" rowspan="1" colspan="1">A machine-readable description of the measurement</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.version</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">A revision string associated with the measurement and a reference value</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.SVN</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">The security version number associated with the measurement and a reference value</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.flags</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">Operational states associated with a TCB or composite device that affects the object being measured. If omitted, the TCB or omposite device is not capable of entering this state. Valid states are: not-configured, not-secure, recovery, debug.</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.fwids</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">A list of digests resulting from applying the hash algorithm over the object being measured</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.vendorinfo</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">Actual values or state that is associated with a TVB element</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">tcb-info.vendormask</td>
-                <td class="text-left" rowspan="1" colspan="1">0-1</td>
-                <td class="text-left" rowspan="1" colspan="1">A mask that allows a Verifier to ignore a subset of collected tcb-info.vendorinfo values that the Endorser asserts are not security relevant</td>
-              </tr>
-            </tbody>
-          </table>
-</section>
-</div>
 <div id="rpm-version-scheme">
-<section id="section-2.4.2">
+<section id="section-2.3.1">
           <h4 id="name-coswid-version-scheme-for-r">
-<a href="#section-2.4.2" class="section-number selfRef">2.4.2. </a><a href="#name-coswid-version-scheme-for-r" class="section-name selfRef">CoSWID Version Scheme for RPM</a>
+<a href="#section-2.3.1" class="section-number selfRef">2.3.1. </a><a href="#name-coswid-version-scheme-for-r" class="section-name selfRef">CoSWID Version Scheme for RPM</a>
           </h4>
-<p id="section-2.4.2-1">To enable encoding version information into a CoSWID of RPM packages, the SWID version scheme value index TBD1 has been registered.
+<p id="section-2.3.1-1">To enable encoding version information into a CoSWID tag for RPM packages, the SWID version scheme value index TBD1 has been registered.
 RPM versions are defined as epoch:version-release-architecture, where the "epoch:" component is optional.
 Epoch is a numerical value, which should be considered zero if the epoch component is missing.
 Version and Release can be any string as long as they do not contain a hyphen (-).
-Architecture is an alphanumerical string.<a href="#section-2.4.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.4.2-2">Sorting of RPM versions is a multi-step process:
+Architecture is an alphanumerical string.<a href="#section-2.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.1-2">Sorting of RPM versions is a multi-step process:
 - The epoch, version and release components are compared in that order, as soon as a difference is found, that is the overall difference.
 - The epoch component is compared as integers. A higher number means a higher version.
 - The version and release components are compared alphabetically, until a digit is encountered in both strings, at which point as many digits are consumed from both to form an integer, which is then compared. If the integers are identical, the comparison continues alphabetically.
-- The architecture component is never sorted. If they are different between two versions, the versions are inequal, not higher or lower.<a href="#section-2.4.2-2" class="pilcrow">¶</a></p>
+- The architecture component is never sorted. If they are different between two versions, the versions are inequal, not higher or lower.<a href="#section-2.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-</section>
-</div>
-<div id="additional-measurement-attributes-for-coswid">
-<section id="section-2.5">
-        <h3 id="name-additional-measurement-attr">
-<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-additional-measurement-attr" class="section-name selfRef">Additional Measurement Attributes for CoSWID</a>
-        </h3>
-<p id="section-2.5-1"><span>[<a href="#I-D.ietf-sacm-coswid" class="xref">I-D.ietf-sacm-coswid</a>]</span> specifies a well-defined file hash structure for integrity measurements of individual files in a file-system. This documents extends this feature to all additional members of the resource-collection group: 'directory', 'resource', and 'process'. These new well-defined measurement options extend the scope of RIM to (sub-)trees of files, software running in memory (e.g. available from Trusted Execution Environments, such as SGX enclaves), and even external resources, such as remote services of collections of RIM bundles.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="coswid-rim-cddl">
-<section id="section-2.6">
+<section id="section-2.4">
         <h3 id="name-coswid-rim-cddl">
-<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-coswid-rim-cddl" class="section-name selfRef">CoSWID RIM CDDL</a>
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-coswid-rim-cddl" class="section-name selfRef">CoSWID RIM CDDL</a>
         </h3>
-<p id="section-2.6-1">The following CDDL specification uses the existing CDDL extension points as defined in <span>[<a href="#I-D.ietf-sacm-coswid" class="xref">I-D.ietf-sacm-coswid</a>]</span>:<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-1">The following CDDL specification uses the existing CDDL extension points as defined in <span>[<a href="#I-D.ietf-sacm-coswid" class="xref">I-D.ietf-sacm-coswid</a>]</span>:<a href="#section-2.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2.6-2.1">$$coswid-extension<a href="#section-2.6-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-2.4-2.1">$$coswid-extension<a href="#section-2.4-2.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.6-2.2">$$payload-extension<a href="#section-2.6-2.2" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-2.6-2.3">$$directory-extension<a href="#section-2.6-2.3" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-2.6-2.4">$$resource-extension<a href="#section-2.6-2.4" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-2.6-2.5">$$process-extension<a href="#section-2.6-2.5" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-2.6-2.6">$$link-extension<a href="#section-2.6-2.6" class="pilcrow">¶</a>
-</li>
-          <li class="normal" id="section-2.6-2.7">$$resource-collection-extension<a href="#section-2.6-2.7" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.4-2.2">$$payload-extension<a href="#section-2.4-2.2" class="pilcrow">¶</a>
 </li>
         </ul>
-<div id="section-2.6-3">
+<div id="section-2.4-3">
 <pre class="sourcecode lang-CDDL">&lt;CODE BEGINS&gt;
-$$coswid-extension //= (reference-measurement =&gt; reference-measurement-entry)
+$$coswid-extension //= (reference-values =&gt; reference-values-entry)
 
-reference-measurement-entry = {
+reference-value-entry = {
   ? payload-type =&gt; direct / indirect / hybrid,
   ? platform-configuration-uri-global =&gt; any-uri,
   ? platform-configuration-uri-local =&gt; any-uri,
@@ -1373,72 +1246,7 @@ direct = 0
 indirect = 1
 hybrid = 2
 
-$$directory-extension //= ( ? hash =&gt; hash-entry )
-
-$$resource-extension //= ( ? hash =&gt; hash-entry )
-
-$$process-extension //= ( ? hash =&gt; hash-entry )
-
-$$link-extension //= ( ? thumbprint =&gt; hash-entry )
-
-$$resource-collection-extension //= (
-  ? object =&gt; object-entry / [ 2* object-entry ]
-)
-
-object-entry = {
-  resource-collection,
-  tcb-info,
-  $$object-extension,
-}
-
-tcb-info = (
-  tcb-info.id =&gt; hash-entry,
-  tcb-info.key-elements =&gt; {
-    tcb-info.vendor =&gt; text,
-    ? tcb-info.model =&gt; text,
-    ? tcb-info.layer =&gt; int,
-    ? tcb-info.index =&gt; int,
-    tcb-info.type =&gt; tagged-bytes / uuid-bytes,
-  },
-  ? tcb-info.version =&gt; text,
-  ? tcb-info.SVN =&gt; int,
-  ? tcb-info.flags =&gt; uint .bits tcb-info.operational-flags,
-  ? tcb-info.fwids,
-  ? tcb-info.vendorinfo =&gt; bytes .size 8,
-  ? tcb-info.vendormask =&gt; bytes,
-)
-
-uuid-bytes = bytes .size 8
-
-tcb-info.operational-flags = &amp;(
-  not-configured: 0,
-  not-secure: 1,
-  recovery: 2,
-  debug: 3,
-)
-
-tcb-info.fwids = [
-  + [ hash-alg: [ * int ] / text,
-      digest: bytes,
-    ]
-]
-
-object = 83
-tcb-info.id = 84
-tcb-info.key-elements = 85
-tcb-info.vendor = 86
-tcb-info.model = 87
-tcb-info.layer = 88
-tcb-info.index = 89
-tcb-info.type = 90
-tcb-info.version = 91
-tcb-info.SVN = 92
-tcb-info.flags = 93
-tcb-info.fwids = 94
-tcb-info.vendorinfo = 95
-tcb-info.vendormask = 96
-
-&lt;CODE ENDS&gt;</pre><a href="#section-2.6-3" class="pilcrow">¶</a>
+&lt;CODE ENDS&gt;</pre><a href="#section-2.4-3" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -1486,7 +1294,7 @@ Specification: See {{rpm-version-scheme}}
 <dl class="references">
 <dt id="I-D.ietf-sacm-coswid">[I-D.ietf-sacm-coswid]</dt>
         <dd>
-<span class="refAuthor">Birkholz, H.</span><span class="refAuthor">, Fitzgerald-McKay, J.</span><span class="refAuthor">, Schmidt, C.</span><span class="refAuthor">, and D. Waltermire</span>, <span class="refTitle">"Concise Software Identification Tags"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-sacm-coswid-15</span>, <time datetime="2020-05-01" class="refDate">1 May 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-sacm-coswid-15.txt">http://www.ietf.org/internet-drafts/draft-ietf-sacm-coswid-15.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span><span class="refAuthor">, Fitzgerald-McKay, J.</span><span class="refAuthor">, Schmidt, C.</span><span class="refAuthor">, and D. Waltermire</span>, <span class="refTitle">"Concise Software Identification Tags"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-sacm-coswid-16</span>, <time datetime="2020-11-02" class="refDate">2 November 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-sacm-coswid-16.txt">http://www.ietf.org/internet-drafts/draft-ietf-sacm-coswid-16.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -1509,7 +1317,7 @@ Specification: See {{rpm-version-scheme}}
 <dd class="break"></dd>
 <dt id="I-D.ietf-rats-architecture">[I-D.ietf-rats-architecture]</dt>
       <dd>
-<span class="refAuthor">Birkholz, H.</span><span class="refAuthor">, Thaler, D.</span><span class="refAuthor">, Richardson, M.</span><span class="refAuthor">, Smith, N.</span><span class="refAuthor">, and W. Pan</span>, <span class="refTitle">"Remote Attestation Procedures Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-architecture-05</span>, <time datetime="2020-07-10" class="refDate">10 July 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-rats-architecture-05.txt">http://www.ietf.org/internet-drafts/draft-ietf-rats-architecture-05.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span><span class="refAuthor">, Thaler, D.</span><span class="refAuthor">, Richardson, M.</span><span class="refAuthor">, Smith, N.</span><span class="refAuthor">, and W. Pan</span>, <span class="refTitle">"Remote Attestation Procedures Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-rats-architecture-08</span>, <time datetime="2020-12-08" class="refDate">8 December 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-rats-architecture-08.txt">http://www.ietf.org/internet-drafts/draft-ietf-rats-architecture-08.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1546,27 +1354,6 @@ Specification: See {{rpm-version-scheme}}
 </div>
 </address>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Ned Smith</span></div>
-<div dir="auto" class="left"><span class="org">Intel Corporation</span></div>
-<div dir="auto" class="left"><span class="country-name">United States of America</span></div>
-<div class="email">
-<span>Email:</span>
-<a href="mailto:ned.smith@intel.com" class="email">ned.smith@intel.com</a>
-</div>
-</address>
-<address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Jessica Fitzgerald-McKay</span></div>
-<div dir="auto" class="left"><span class="org">Department of Defense</span></div>
-<div dir="auto" class="left"><span class="street-address">9800 Savage Road</span></div>
-<div dir="auto" class="left">
-<span class="locality">Ft. Meade</span>, <span class="region">Maryland</span> </div>
-<div dir="auto" class="left"><span class="country-name">United States of America</span></div>
-<div class="email">
-<span>Email:</span>
-<a href="mailto:jmfitz2@nsa.gov" class="email">jmfitz2@nsa.gov</a>
-</div>
-</address>
-<address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">David Waltermire</span></div>
 <div dir="auto" class="left"><span class="org">National Institute of Standards and Technology</span></div>
 <div dir="auto" class="left"><span class="street-address">100 Bureau Drive</span></div>
@@ -1591,6 +1378,18 @@ Specification: See {{rpm-version-scheme}}
 <div class="email">
 <span>Email:</span>
 <a href="mailto:shwethab@cisco.com" class="email">shwethab@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Jessica Fitzgerald-McKay</span></div>
+<div dir="auto" class="left"><span class="org">Department of Defense</span></div>
+<div dir="auto" class="left"><span class="street-address">9800 Savage Road</span></div>
+<div dir="auto" class="left">
+<span class="locality">Ft. Meade</span>, <span class="region">Maryland</span> </div>
+<div dir="auto" class="left"><span class="country-name">United States of America</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:jmfitz2@nsa.gov" class="email">jmfitz2@nsa.gov</a>
 </div>
 </address>
 </section>
