@@ -31,23 +31,6 @@ author:
   code: '27601'
   city: Raleigh
   country: Netherlands
-- ins: N. Smith
-  name: Ned Smith
-  org: Intel Corporation
-  abbrev: Intel
-  email: ned.smith@intel.com
-  street: ""
-  code: ""
-  city: ""
-  country: USA
-- ins: J. Fitzgerald-McKay
-  name: Jessica Fitzgerald-McKay
-  org: Department of Defense
-  email: jmfitz2@nsa.gov
-  street: 9800 Savage Road
-  city: Ft. Meade
-  region: Maryland
-  country: USA
 - ins: D. Waltermire
   name: David Waltermire
   org: National Institute of Standards and Technology
@@ -68,6 +51,14 @@ author:
   region: KARNATAKA
   code: '560087'
   country: India
+- ins: J. Fitzgerald-McKay
+  name: Jessica Fitzgerald-McKay
+  org: Department of Defense
+  email: jmfitz2@nsa.gov
+  street: 9800 Savage Road
+  city: Ft. Meade
+  region: Maryland
+  country: USA
 
 normative:
   RFC2119:
@@ -80,42 +71,36 @@ informative:
 
 --- abstract
 
-Concise Software Identification (CoSWID) tags identify and describe individual software components, patches, and installation bundles. CoSWID is based on ISO/IEC 19770-2:2015 2:2015 that provides a complementary XML schema definition (XSD) for Software Identification (SWID) tags. CoSWID supports the same features as the corresponding XML SWID tags. The CoSWID specification also includes more structured extensibility features and reduces a few of ambiguities that are not explicitly resolved in the ISO XSD. In this document, these extensibility features (extension points) are used to add attributes to the CoSWID specification. The new attributes allow for the use of CoSWID as Reference Integrity Measurements (RIM). There are three set of RIM features defined in this specification. 1.) attributes that support RIM manifests for Measured Boot, 2.) attributes that support package manager managed structures, and 3.) attributes that allow for OID to be used in the description of Reference Integrity Measurements.
+This document specifies the CDDL and usage description for Reference Integrity Measurements (RIM) in Remote Attestation Procedures (RATS). The specification is based on Concise Software Identification (CoSWID) and TCG Reference Integrity Manifest Information Model -- based on Host Integrity at Runtime and Start-up (HIRS). Extension points defined in CoSWID used to augment CoSWID tags with new attributes that can express the TCG Reference Integrity Manifest extensions.
 
 --- middle
 
 # Introduction
 
-Reference Integrity Measurements describe the intended state of (composite) software components installed on a (composite) device. A measurement of all installed software components of a devices allows for assertions about the trustworthiness of the given device. In combination with a root of trust (RoT) for reporting (RTR), these measurements can be refined into evidence and enable IETF Remote ATtestation procedureS (RATS). RATS support the decision process of whether to put trust in the trustworthiness of a device -- or not.
+Reference Integrity Measurements describe the intended state of (composite) software components installed on a (composite) device. A measurement of all installed software components of a devices allows for assertions about the trustworthiness of the given device. In combination with a root of trust (RoT) for reporting (RTR), these measurements can be refined into evidence and enable Remote ATtestation procedureS (RATS). RATS support the decision process of whether to put trust in the trustworthiness of a device -- or not.
 
-The RATS architecture {{-rats-arch}} defines the roles Verifiers, Attesters, Endorsers, and Relying Parties. The RATS architecture also specifies that Attestation Evidence is created by Attesters and consumed by Verifiers. Ultimately, the goal is to enable a Relying Party to put trust in the trustworthiness of a remote peer (the Attester). Attestation Evidence is composed of believable assertions about an Attester's trustworthiness characteristics. In RATS, these assertions are called Claims. The Verifier conducts a set of appraisal procedures in order to assess the compliance of an Attester's trustworthiness characteristics.
+The RATS architecture {{-rats-arch}} defines the following roles: Verifier, Attester, Endorse, and Relying Party, and Reference Value Provider. The RATS architecture also specifies that attestation Evidence is created by Attesters and consumed by Verifiers. Ultimately, the goal is to enable a Relying Party to put trust in the trustworthiness of a remote peer (the Attester). Attestation Evidence is composed of believable assertions about an Attester's trustworthiness characteristics. In RATS, these assertions are called Claims. The Verifier conducts a set of appraisal procedures in order to assess the compliance of an Attester's trustworthiness characteristics.
 
-A prominent appraisal procedure in RATS is the comparison of Claim values included in Attestation Evidence with Reference Claim values provided by Endorsers (e.g. supply chain entities). The comparison of Claim values via Reference Claim values is vital for the assessment of compliance metrics with respect to software components installed on an Attester. A typical objective here is the remediation of already vulnerabilities discovered in certain versions of software components.
+A prominent appraisal procedure in RATS is the comparison of Claim values included in attestation Evidence with reference Claim values provided by Reference Value Providers (RVP, e.g. a supply chain entity). The comparison of Claim values via Reference Claim Values (RCV) is vital for the assessment of compliance metrics with respect to software components installed on an Attester. A typical objective here is the remediation of vulnerabilities discovered in certain versions of installed software components.
 
-The Integrity Measurement Architecture (IMA) of the Linux Security Modules (LSM) provides a detailed Event Log (sometimes also referred to as a Measurement Log) that retains a sequence of hash measurements of every software sub-component (e.g. a firmware, an ELF executable, or a configuration file) that is created and appended to the sequence of measurements that composes the event log before the software component in question is started or read.
+The Integrity Measurement Architecture (IMA) of the Linux Security Modules (LSM) provides a detailed Event Log (sometimes also referred to as a Measurement Log) that retains a sequence of hash measurements of every software sub-component (e.g. a firmware, an ELF executable, or a configuration file) that is created and appended to the sequence of measurements that composes the event log before the software component in question is started or read -- "first measure, than start".
 
-In essence, to enable this appraisal procedure conducted by Verfiers an Attester's IMA provides Event Logs that include the hash values of every started software component and therefore are part of the Attestation Evidence an Attester creates. The complementary well-known-values that Verifiers require are included in the Reference Integrity Measurements (RIM). RIMs can be provided via Software Identification tags created by Endorsers, such as the software creators, manufacturers, vendors, or other trusted third parties (e.g. supply chain or certification entities).
+In essence, to enable this appraisal procedure conducted by Verfiers an Attester's IMA provides Event Logs that include the hash values of every started software component and therefore are part of the attestation Evidence an Attester creates. The complementary well-known-values that Verifiers require are included in the Reference Integrity Measurements (RIM). RIMs for software components can be provided via Concise Software Identification (CoSWID) tags created or maintained by RVPs, such as the software creators, manufacturers, vendors, or other trusted third parties (e.g. a certification entity).
 
-This document provides an extension to the CoSWID specification defined in {{-coswid}}. The extension adds attributes to CoSWID tags that enable them to express RIMs. One prominent subset of these attributes are illustrated in the TCG Reference Integrity Manifest Information Model [ref] specification. These attributes are added to the existing CoSWID specification via the most general extension point the CoSWID specification provides: $$coswid-extensions. An additional map definition named "reference-measurements" is added and is defined in section [ref] of this document. Another prominent subset is the addition of an object tree next to the file system tree as defined by {{-coswid}}. The object tree enables the representation of multiple layered execution environments as described by the Layered Attestation concept in the RATS architecture {{-rats-arch}}.
+This document provides an extension to the CoSWID specification defined in {{-coswid}}. The extension adds attributes to CoSWID tags that enable them to express RIMs. One prominent subset of these attributes are illustrated in the TCG Reference Integrity Manifest Information Model [ref] specification. These attributes are added to the existing CoSWID specification via the most general extension point the CoSWID specification provides: $$coswid-extensions. An new map type-definition named "reference-values" is added and is defined in section [ref] of this document.
 
-Furthermore, a usage profile for signed CoSWID tags is defined in this specification in support of the software-component structure of systems managed by package managers. Signed CoSWID tags that are aligned with that software model can be used to describe the contents of one or multiple of the packages that make up the contents of a system.
-In this case, it may be that multiple CoSWID tags are provided as Reference Claim values for a attestation by a single Attester.
-In order to minimize the impact on the sizes of packages, it is likely that any CoSWID tags delivered as part of packages as part of a package manager managed system will not contain actual reference values, but instead a link-entry to a CoSWID tag published by the vendor in a repository.
-
-Reference Integrity Measurements are a subset of the Conceptual Messages defined as Endorsements. RIMs provide a vital resource to be consumed by Verifiers in conjunction with Appraisal Policies and Evidence. While RIMs represent nominal values, Appraisal Policies represent imperative guidance how to use nominal values in an appraisal procedure. Evidence represents assertions about the trustworthiness of a device's Target Environments created by its own Attesting Environment. As Evidence can be rather complex and its appraisal therefore a  burden for Relying Parties that are interested in trustworthiness evaluations, Verifies take on this duty and create easier to digest Attestation Results for Relying Parties. In consequence, Verifiers are the entities that have to put trust in the provenance and integrity of RIMs -- and Endorsements in general -- relying on proof of integrity and authenticity.
+Furthermore, a usage profile for signed CoSWID tags is defined in this specification in support of the software-component structure of systems managed by package managers. Signed CoSWID tags that are aligned with that software model can be used to describe the contents of one or multiple of the packages that make up the contents of a system. In order to minimize the impact on the sizes of packages, it is likely that any CoSWID tags delivered as part of packages as part of a package manager managed system will not contain actual reference values, but instead a link-entry to a CoSWID tag published by the vendor in a repository.
 
 ## Requirements Notation
 
 {::boilerplate bcp14}
 
-# CoSWID Attribute Extensions
+# CoSWID Attribute Extensions for RIM
 
-This specification defines four types of attribute sets that can be added to the CoSWID specification via its defined extension points.
+This specification defines two types of attribute sets that can be added to the CoSWID specification via the specified defined extension points:
 
-1. Attributes that support RIM manifests for Measured Boot (often referred to as Secure Boot),
-2. Attributes that support the RPM package manager structure,
-3. Attributes that allow to represent composite devices including several Target Environments, and
-3. Attributes that allow for OID to be used in the description of Reference Integrity Measurements.
+1. Attributes that support RIM manifests for Measured Boot (often referred to as Secure Boot) and
+2. Attributes that support the RPM package manager structure.
 
 ## RIM requirements on existing CoSWID attributes
 
@@ -123,7 +108,7 @@ As defined by NIST IR 8060 [ref], there are required "Meta Attributes" for XML S
 
 The 'software-meta-entry' type defined in the CoSWID specification includes the optional members 'product', 'colloquial-version', 'revision', and 'edition'. These four members MUST be included in a CoSWID RIM in order to compose a valid Reference Integrity Measurement in alignment with NIST IR 8060. Furthermore, the semantics of the text (tstr) typed values MUST convey content that allows for semantic interoperability in a given scope (e.g., an administrative domain). The software-meta-entries provide vital support for steering decisions made by the RATS verifier role in order to enable discovery and matching of related or additional CoSWID RIM available to or discoverable by the verifier.
 
-## RIM Extensions for Measured Boot
+## RIM Extensions for HIRS
 
 The following attributes are derived from the TCG Reference Integrity Manifest Information Model [ref] specification. These attributes support the creation of very small CoSWID RIM tags that enable the Remote Integrity Verification (RIV {{-riv}}) of small things, i.e., constrained devices in constrained network environments. In consequence, the majority of the attributes listed in this section represent metadata about firmware and supply chain entities that provide firmware for a device (platform). Analogously to the mandated software-meta-entries illustrated above, the attributes defined in the table below provide more context and enable steering decisions for the appraisal procedures of a Verifier. Consecutively, RIM have to be managed and curated in a consistent manner so that there is no significant threshold for a Verifier to make use of them during an appraisal procedure.
 
@@ -154,84 +139,10 @@ To enable very small CoSWID tags that basically are signed references to full Ba
 |---
 | rim-reference | 0-1 | A URI pointing to the CoSWID Base RIM that will list the payload reference measurements (hashes) in case of a minimal CoSWID tag.
 
-## RIM Extensions for Composite Device
-
-Attesters that are composite devices can include several Target Environments. Some of these Target Environments can take on the duties of Attesting Environments during a boot sequence as described in section 4.3. of the RATS architecture {{-rats-arch}}. The corresponding procedure is called Layered Attestation and requires a dedicated RIM for each Target Environment of the Attester. The addition of object tree attributes to CoSWID using the $$resource-collection-extension extension point addresses the resulting requirements.
-
-Each Target Environment involved in Layered Attestation can be considered its own Trusted Computing Base (TCB) [ref]. TCB metadata can be used to identify or locate RIMs. The addition of TCB information to the new object tree structure is in support of these identifiers for RIM discovery.
-
-Additionally, software components started in these Target Environments might not be referenceable via a filesystem (e.g., in the case of firmware). To enable RIMs to represent firmware items that are not associated with a filesystem, attributes for object trees are added to the existing filesystem items tree.
-
-<!--
-~~~~CDDL
-$$resource-collection-extension //= (
-  ? object => object-entry / [ 2* object-entry ]
-)
-
-object-entry = {
-  resource-collection,
-  tcb-info,
-  $$object-extension,
-}
-
-tcb-info = (
-  tcb-info.id => hash-entry,
-  tcb-info.key-elements => {
-    tcb-info.vendor => text,
-    ? tcb-info.model => text,
-    ? tcb-info.layer => int,
-    ? tcb-info.index => int,
-    tcb-info.type => tagged-bytes / uuid-bytes,
-  },
-  ? tcb-info.version => text,
-  ? tcb-info.SVN => int,
-  ? tcb-info.flags => uint .bits tcb-info.operational-flags,
-  ? tcb-info.fwids,
-  ? tcb-info.vendorinfo => bytes .size 8,
-  ? tcb-info.vendormask => bytes,
-)
-
-uuid-bytes = bytes .size 8
-
-tcb-info.operational-flags = &(
-  not-configured: 0,
-  not-secure: 1,
-  recovery: 2,
-  debug: 3,
-)
-
-tcb-info.fwids = [
-  + [ hash-alg: [ * int ] / text,
-      digest: bytes,
-    ]
-]
-~~~~
--->
-
-### The tcb-info Group
-
-Every object in the object tree can be represented with a set of metadata items pertaining a specific TCB. The following items can be associated with a dedicate object-entry:
-
-| Attribute Name | Quantity | Description
-|---
-| tcb-info.id | 1 | A hash of the tcb-info.key-elements value including the map structure
-| tcb-info.key-elements | 1 | A collection of attributes that disambiguates the various TCB objects in a composite device scope
-| tcb-info.vendor | 1 | The entity that named the measurement of the Target Environment TCB referenced by an object-entry
-| tcb-info.model | 0-1 | The product name associated with the object-entry in a measurement
-| tcb-info.layer | 0-1 | The layer in the composite devive (and therefore object tree) of the TCB associated with the object-entry in a measurement
-| tcb-info.index | 0-1 | An index that enumerates TCB/object-entries in a CoSWID RIM tag
-| tcb-info.type | 1 | A machine-readable description of the measurement
-| tcb-info.version | 0-1 | A revision string associated with the measurement and a reference value
-| tcb-info.SVN | 0-1 | The security version number associated with the measurement and a reference value
-| tcb-info.flags | 0-1 | Operational states associated with a TCB or composite device that affects the object being measured. If omitted, the TCB or omposite device is not capable of entering this state. Valid states are: not-configured, not-secure, recovery, debug.
-| tcb-info.fwids | 0-1 | A list of digests resulting from applying the hash algorithm over the object being measured
-| tcb-info.vendorinfo | 0-1 | Actual values or state that is associated with a TVB element
-| tcb-info.vendormask | 0-1 | A mask that allows a Verifier to ignore a subset of collected tcb-info.vendorinfo values that the Endorser asserts are not security relevant
-
 {: #rpm-version-scheme}
 ### CoSWID Version Scheme for RPM
 
-To enable encoding version information into a CoSWID of RPM packages, the SWID version scheme value index TBD1 has been registered.
+To enable encoding version information into a CoSWID tag for RPM packages, the SWID version scheme value index TBD1 has been registered.
 RPM versions are defined as epoch:version-release-architecture, where the "epoch:" component is optional.
 Epoch is a numerical value, which should be considered zero if the epoch component is missing.
 Version and Release can be any string as long as they do not contain a hyphen (-).
@@ -243,21 +154,12 @@ Sorting of RPM versions is a multi-step process:
 - The version and release components are compared alphabetically, until a digit is encountered in both strings, at which point as many digits are consumed from both to form an integer, which is then compared. If the integers are identical, the comparison continues alphabetically.
 - The architecture component is never sorted. If they are different between two versions, the versions are inequal, not higher or lower.
 
-## Additional Measurement Attributes for CoSWID
-
-{{-coswid}} specifies a well-defined file hash structure for integrity measurements of individual files in a file-system. This documents extends this feature to all additional members of the resource-collection group: 'directory', 'resource', and 'process'. These new well-defined measurement options extend the scope of RIM to (sub-)trees of files, software running in memory (e.g. available from Trusted Execution Environments, such as SGX enclaves), and even external resources, such as remote services of collections of RIM bundles.
-
 ## CoSWID RIM CDDL
 
 The following CDDL specification uses the existing CDDL extension points as defined in {{-coswid}}:
 
 * $$coswid-extension
 * $$payload-extension
-* $$directory-extension
-* $$resource-extension
-* $$process-extension
-* $$link-extension
-* $$resource-collection-extension
 
 ~~~~ CDDL
 <CODE BEGINS>
