@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-07-13T15:24:43.915639+00:00",
+  "timestamp": "2021-01-12T11:34:41.985109+00:00",
   "repo": "ietf-rats/draft-birkholz-rats-coswid-rim",
   "labels": [
     {
@@ -304,24 +304,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDEyODczMzQ2",
       "title": "include boot events ",
       "url": "https://github.com/ietf-rats/draft-birkholz-rats-coswid-rim/pull/7",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "shwethab",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "include boot events - to cover secure boot keys, and all other artifacts in measured boot ",
       "createdAt": "2020-05-04T10:43:50Z",
-      "updatedAt": "2020-07-13T15:24:27Z",
+      "updatedAt": "2020-07-13T15:34:14Z",
       "baseRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
       "baseRefName": "master",
-      "baseRefOid": "8803542c7494bd584153109de94e24ff4ba1f6ef",
+      "baseRefOid": "63caa496d0d83b6554bfd6f5c711221b73481960",
       "headRepository": "ietf-rats/draft-birkholz-rats-coswid-rim",
       "headRefName": "sprim",
-      "headRefOid": "5941b043de606e071cd6a7d051bc49f4c0726614",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "00c3fe29577b0a0f0efcc22a1e7afd63e71fa394",
+      "closedAt": "2020-07-13T15:34:13Z",
+      "mergedAt": "2020-07-13T15:34:13Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "ee2a6dd19dff79c5fab80ec842a251f3ca751830"
+      },
       "comments": [],
       "reviews": [
         {
